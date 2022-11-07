@@ -1,9 +1,6 @@
 package com.authentication.test;
 
-import com.authentication.rules.PasswordLengthRuleAuthenticator;
-import com.authentication.rules.PasswordLowercaseRuleAuthenticator;
-import com.authentication.rules.PasswordNotNullRuleAuthenticator;
-import com.authentication.rules.PasswordUppercaseRuleAuthenticator;
+import com.authentication.rules.*;
 import com.authentication.validator.PasswordValidator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -94,6 +91,33 @@ public class PasswordValidationTest {
         boolean isValid = passwordValidator.validate("test");
         Assert.assertTrue(isValid);
     }
+
+    @Test
+    public void testPasswordValidatorsPositiveCase(){
+        PasswordValidator passwordValidator = new PasswordValidator();
+        passwordValidator.addRules(new PasswordLengthRuleAuthenticator());
+        passwordValidator.addRules(new PasswordLowercaseRuleAuthenticator());
+        passwordValidator.addRules(new PasswordNotNullRuleAuthenticator());
+        passwordValidator.addRules(new PasswordNumberRuleAuthenticator());
+        passwordValidator.addRules(new PasswordUppercaseRuleAuthenticator());
+        boolean isValid = passwordValidator.validate("Test@1234");
+        Assert.assertTrue(isValid);
+    }
+
+    @Test
+    public void testPasswordValidatorsNegativeCase(){
+        PasswordValidator passwordValidator = new PasswordValidator();
+        passwordValidator.addRules(new PasswordLengthRuleAuthenticator());
+        passwordValidator.addRules(new PasswordLowercaseRuleAuthenticator());
+        passwordValidator.addRules(new PasswordNotNullRuleAuthenticator());
+        passwordValidator.addRules(new PasswordNumberRuleAuthenticator());
+        passwordValidator.addRules(new PasswordUppercaseRuleAuthenticator());
+        boolean isValid = passwordValidator.validate("Test@test");
+        Assert.assertFalse(isValid);
+    }
+
+
+
 
 
 

@@ -10,15 +10,17 @@ public class PasswordValidator {
     private List<AuthenticationRules> rulesToBeValidated = new ArrayList<>();
 
     public boolean validate(String stringToBeValidated){
+        boolean response = true;
         for(AuthenticationRules rules: rulesToBeValidated){
             try {
                 rules.validate(stringToBeValidated);
             } catch (AuthenticationException e) {
                 System.out.printf("Validation failed: " +e.getMessage());
-                return false;
+                response = false;
+                break;
             }
         }
-        return true;
+        return response;
     }
 
     public void addRules(AuthenticationRules rules){
